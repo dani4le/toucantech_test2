@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Task 5</title>
+	<link rel="stylesheet" href="../resources/bootstrap.min.css" />
+	<script src="../resources/jquery-3.7.0.js"></script>
+	<style>
+		//for custom style I avoid inline directives for better readability of the html tags
+		#newMember fieldset{
+			max-height:64px;
+			overflow-y:auto;
+		}
+		#newMember [multiple]{
+			float:left;
+			height:0;
+			opacity:0;
+		}
+		#search select{
+			appearance:listbox;
+		}
+		a.btn{
+			margin-top:81px;
+		}
+		table{
+			table-layout:fixed;
+		}
+	</style>
+</head>
+<body class="px-5">
+		<div class="row">
+			<form id="newMember" class="col-sm py-5">
+				<input class="form-control mb-2" name="name" placeholder="Name" required />
+				<input type="email" class="form-control mb-2" name="email" placeholder="Email Address" required />
+				<!-- this is where the school options will be displayed, without a templating engine I preferred to populate it via ajax instead of spaghetti coding -->
+				<fieldset class="position-relative form-check mb-1"></fieldset>
+				<!-- the select element is good for the transmission and validation of the school data -->
+				<select name="schools" multiple required></select>
+				<button type="submit" class="btn btn-primary text-uppercase w-100">insert</button>
+			</form>
+			<div id="search" class="col-sm py-5">
+				<!-- this is where the school options will be displayed, without a templating engine I preferred to populate it via ajax instead of spaghetti coding -->
+				<select name="schools" class="form-control mb-2">
+					<option value="">search by school</option>
+				</select>
+				<!-- this is where the country options will be displayed, without a templating engine I preferred to populate it via ajax instead of spaghetti coding -->
+				<select name="countries" class="form-control mb-2">
+					<option value="">search by country</option>
+				</select>
+				<a class="btn btn-primary text-uppercase w-100" href="controller.php?getReport=1">export CSV report</a>
+			</div>
+		</div>
+	<table class="table table-striped text-center border-top">
+		<thead>
+			<tr>
+				<th>School</th>
+				<th>Country</th>
+				<th>Name</th>
+				<th>emailaddress</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<script src='./ajax.js'></script>
+	<script>
+		//this javascript code is just relating to the interface, hence is to consider part of the view
+		$('fieldset').on('change', ':checkbox', function(e){
+			const option = $('#newMember option[value=' + e.target.value + ']');
+			if(e.target.checked) option.prop('selected', 1);
+			else option.prop('selected', 0);
+		});
+	</script>
+</body>
+</html>
